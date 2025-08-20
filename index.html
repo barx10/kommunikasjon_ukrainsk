@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Базова норвезька комунікація (Norsk grunnleggende kommunikasjon)</title>
+  <style>
+    /* ----- B A S E  +  K O N T R A S T ----- */
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #2b2b2b;
+      --card: #f3f3f3;
+      --card-border: #c9c9c9;
+      --focus: #005fcc;
+      --accent: #0a66c2;
+      --chip: #e9eef6;
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    *:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after{ animation:none !important; transition:none !important; } }
+
+    header { padding: 12px 16px; border-bottom: 2px solid var(--card-border); display: grid; gap: 10px; }
+    .topbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .title { font-size: 1.1rem; font-weight: 700; margin-right: auto; }
+
+    .controls { display: grid; gap: 8px; }
+
+    .searchbar { display: flex; gap: 6px; align-items: center; }
+    .searchbar input[type="search"] { flex: 1; min-height: 48px; padding: 10px 12px; border: 2px solid var(--card-border); border-radius: 8px; font-size: 1rem; }
+
+    .btn { min-height: 48px; min-width: 48px; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--card-border); background: #fafafa; color: var(--fg); font-weight: 600; cursor: pointer; }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--chip); border: 2px solid var(--card-border); border-radius: 999px; padding: 8px 12px; min-height: 48px; cursor: pointer; font-weight: 600; }
+    .chip[aria-pressed="true"] { background: #d9e9ff; border-color: var(--accent); }
+
+    main { padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+
+    .card { display: grid; grid-template-rows: auto auto auto auto; gap: 6px; padding: 14px; min-height: 160px; background: var(--card); border: 2px solid var(--card-border); border-radius: 14px; }
+    .card[tabindex="0"] { cursor: pointer; }
+    .emoji { font-size: 2rem; }
+    .no { font-size: 1.35rem; font-weight: 800; letter-spacing: .2px; }
+    .uk { font-size: .95rem; color: var(--muted); }
+
+    .actions { display: flex; gap: 8px; margin-top: 8px; }
+    .iconbtn { min-width: 48px; min-height: 48px; border-radius: 10px; border: 2px solid var(--card-border); background: #fff; font-size: 1.2rem; cursor: pointer; }
+
+    .status { margin: 8px 16px 16px; padding: 10px 12px; border: 2px solid var(--card-border); border-radius: 8px; background: #fff; }
+
+    @media (max-width: 480px) { .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="title" aria-label="Назва">Базова норвезька комунікація (Norsk grunnleggende kommunikasjon)</div>
+    </div>
+
+    <div class="controls" id="controls" aria-label="Панель керування">
+      <div class="searchbar">
+        <input id="search" type="search" placeholder="Пошук" aria-label="Пошук фраз" />
+        <button id="clearSearch" class="btn" type="button" aria-label="Очистити пошук">Очистити (Tøm)</button>
+      </div>
+
+      <div class="filters" role="group" aria-label="Фільтр за категоріями">
+        <button class="chip" type="button" data-cat="Усі" aria-pressed="true" aria-label="Показати всі">Усі (Alle)</button>
+        <button class="chip" type="button" data-cat="Потреби" aria-pressed="false" aria-label="Фільтр за категорією: Потреби">Потреби (Behov)</button>
+        <button class="chip" type="button" data-cat="Почуття" aria-pressed="false" aria-label="Фільтр за категорією: Почуття">Почуття (Følelser)</button>
+        <button class="chip" type="button" data-cat="У школі" aria-pressed="false" aria-label="Фільтр за категорією: У школі">У школі (På skolen)</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="cards" class="grid" aria-label="Картки фраз"></section>
+  </main>
+
+  <div class="status" id="status" role="status" aria-live="polite">Готово</div>
+
+  <script>
+    // ===================== D A T A =====================
+    const DATA = [
+      { no: "Jeg er sulten", uk: "Я голодний", emoji: "🍽️", cat: "Потреби", alt: ["mat", "spise", "hungry", "їжа", "хочу їсти", "голодний"] },
+      { no: "Jeg er tørst", uk: "Я хочу пити", emoji: "💧", cat: "Потреби", alt: ["drikke", "vann", "thirsty", "пити", "вода", "спрага"] },
+      { no: "Jeg må på do", uk: "Мені потрібно в туалет", emoji: "🚻", cat: "Потреби", alt: ["toalett", "wc", "bathroom", "туалет", "в туалет"] },
+      { no: "Jeg trenger en pause", uk: "Мені потрібна перерва", emoji: "⏸️", cat: "Потреби", alt: ["hvile", "break", "перерва"] },
+      { no: "Jeg er sliten", uk: "Я втомився", emoji: "😴", cat: "Потреби", alt: ["trøtt", "slapp", "tired", "втома", "втомився"] },
+      { no: "Kan jeg hente vann", uk: "Чи можна взяти води", emoji: "🚰", cat: "Потреби", alt: ["drikke", "vann", "вода", "пити"] },
+      { no: "Kan jeg gå ut litt", uk: "Чи можна вийти на хвилинку", emoji: "🚪", cat: "Потреби", alt: ["ute", "gå ut", "вийти", "на вулицю"] },
+      { no: "Dette er bra", uk: "Це добре", emoji: "👍", cat: "Почуття", alt: ["fint", "ok", "bra", "добре"] },
+      { no: "Dette er dårlig", uk: "Це погано", emoji: "👎", cat: "Почуття", alt: ["ikke bra", "bad", "погано"] },
+      { no: "Dette er gøy", uk: "Це весело", emoji: "😄", cat: "Почуття", alt: ["morsomt", "fun", "весело"] },
+      { no: "Dette er kjedelig", uk: "Це нудно", emoji: "😐", cat: "Почуття", alt: ["ikke gøy", "boring", "нудно"] },
+      { no: "Jeg er glad", uk: "Я радий", emoji: "🙂", cat: "Почуття", alt: ["happy", "glad", "радісний"] },
+      { no: "Jeg er trist", uk: "Мені сумно", emoji: "😢", cat: "Почуття", alt: ["lei seg", "sad", "сумно"] },
+      { no: "Jeg er sint", uk: "Я злюся", emoji: "😠", cat: "Почуття", alt: ["sur", "arg", "sint", "злий"] },
+      { no: "Jeg er redd", uk: "Мені страшно", emoji: "😨", cat: "Почуття", alt: ["frykt", "engstelig", "redd", "страшно"] },
+      { no: "Jeg forstår", uk: "Я розумію", emoji: "✅", cat: "У школі", alt: ["skjønner", "understand", "розумію"] },
+      { no: "Jeg forstår ikke", uk: "Я не розумію", emoji: "❓", cat: "У школі", alt: ["vet ikke", "don't understand", "не розумію"] },
+      { no: "Kan du hjelpe meg", uk: "Чи можете ви мені допомогти", emoji: "🙋", cat: "У школі", alt: ["hjelp", "help", "допомога"] },
+      { no: "Kan du si det en gang til", uk: "Повторіть, будь ласка", emoji: "🔁", cat: "У школі", alt: ["gjenta", "repeat", "ще раз"] },
+      { no: "Kan jeg jobbe alene", uk: "Чи можна працювати самому", emoji: "🙇", cat: "У школі", alt: ["selv", "alone", "сам"] },
+      { no: "Kan jeg jobbe sammen", uk: "Чи можна працювати разом", emoji: "👥", cat: "У школі", alt: ["gruppe", "sammen", "разом"] },
+      { no: "Det er for vanskelig", uk: "Це занадто складно", emoji: "🧩", cat: "У школі", alt: ["ikke lett", "difficult", "складно"] },
+      { no: "Det er for lett", uk: "Це занадто легко", emoji: "🟢", cat: "У школі", alt: ["enkelt", "easy", "легко"] },
+    ].map((x, i) => ({ ...x, idx: i }));
+
+    // ===================== S T A T E  +  F A V S =====================
+    const state = { query: "", cat: "Усі", rate: 0.9 };
+    const FAV_KEY = "fav_phrases_v1";
+    const favSet = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+    function persistFavs() { localStorage.setItem(FAV_KEY, JSON.stringify([...favSet])); }
+
+    // ===================== H E L P E R S =====================
+    function fold(s) {
+      return (s || "")
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .replace(/æ/g, 'ae')
+        .replace(/ø/g, 'o')
+        .replace(/å/g, 'aa')
+        .toLowerCase();
+    }
+
+    function isMatch(item, q) {
+      if (!q) return true;
+      const hay = fold([item.no, item.uk, ...(item.alt || [])].join(' '));
+      const tokens = fold(q).split(/\s+/).filter(Boolean);
+      // Alle ord i søket må finnes et eller annet sted i frasen/alternativene
+      return tokens.every(t => hay.includes(t));
+    }
+
+    function sortWithFavs(items) {
+      return items.slice().sort((a, b) => {
+        const af = favSet.has(a.no) ? 1 : 0;
+        const bf = favSet.has(b.no) ? 1 : 0;
+        if (af !== bf) return bf - af; // favoritter først
+        return a.idx - b.idx;          // stabilt ellers
+      });
+    }
+
+    // ===================== R E N D E R =====================
+    const cardsEl = document.getElementById('cards');
+    const statusEl = document.getElementById('status');
+    function announce(msg) { statusEl.textContent = msg; }
+
+    function render() {
+      const filtered = DATA.filter(x => (state.cat === "Усі" || x.cat === state.cat) && isMatch(x, state.query));
+      const arr = sortWithFavs(filtered);
+      cardsEl.innerHTML = "";
+
+      for (const item of arr) {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Відтворити фразу норвезькою: ${item.no}`);
+        card.dataset.no = item.no;
+        card.dataset.cat = item.cat;
+
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji';
+        emoji.textContent = item.emoji;
+        emoji.setAttribute('aria-hidden', 'true');
+
+        const no = document.createElement('div');
+        no.className = 'no';
+        no.textContent = item.no; // norsk stor øverst
+
+        const uk = document.createElement('div');
+        uk.className = 'uk';
+        uk.textContent = `${item.uk} (${item.no})`;
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+
+        const speakBtn = document.createElement('button');
+        speakBtn.className = 'iconbtn';
+        speakBtn.type = 'button';
+        speakBtn.textContent = '🔊';
+        speakBtn.setAttribute('aria-label', `Прослухати норвезьку фразу: ${item.no}`);
+
+        const favBtn = document.createElement('button');
+        favBtn.className = 'iconbtn';
+        favBtn.type = 'button';
+        const isFav = favSet.has(item.no);
+        favBtn.textContent = isFav ? '⭐' : '☆';
+        favBtn.setAttribute('aria-label', (isFav ? 'Вилучити з обраного: ' : 'Додати до обраного: ') + item.no);
+        favBtn.setAttribute('aria-pressed', String(isFav));
+        favBtn.title = 'Обране';
+
+        actions.appendChild(speakBtn);
+        actions.appendChild(favBtn);
+
+        card.appendChild(emoji);
+        card.appendChild(no);
+        card.appendChild(uk);
+        card.appendChild(actions);
+
+        card.addEventListener('click', (e) => {
+          if ((e.target instanceof HTMLElement) && e.target.closest('button')) return;
+          speak(item.no);
+        });
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            speak(item.no);
+          }
+        });
+
+        speakBtn.addEventListener('click', () => speak(item.no));
+        favBtn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          if (favSet.has(item.no)) { favSet.delete(item.no); } else { favSet.add(item.no); }
+          persistFavs();
+          render();
+        });
+
+        cardsEl.appendChild(card);
+      }
+
+      if (arr.length === 0) announce('Нічого не знайдено'); else announce('Готово');
+    }
+
+    // ===================== S Ø K  +  F I L T E R =====================
+    const searchInput = document.getElementById('search');
+    const clearSearchBtn = document.getElementById('clearSearch');
+
+    searchInput.addEventListener('input', () => { state.query = searchInput.value; render(); });
+    clearSearchBtn.addEventListener('click', () => { searchInput.value = ''; state.query = ''; render(); searchInput.focus(); });
+
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        state.cat = btn.dataset.cat;
+        render();
+      });
+    });
+
+    // ===================== T A L E  (speechSynthesis) =====================
+    let selectedVoice = null;
+
+    function pickVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || voices.length === 0) return null;
+      const wanted = voices.find(v => /^nb|^no|^nn/i.test(v.lang));
+      return wanted || voices[0];
+    }
+
+    function ensureVoiceReady() {
+      selectedVoice = pickVoice();
+      if (selectedVoice) {
+        const useFallback = !/^nb|^no|^nn/i.test(selectedVoice.lang || '');
+        announce(useFallback ? 'Голос знайдено (резервний).' : 'Голос норвезькою готовий.');
+      } else {
+        announce('Голос недоступний. Спробуйте пізніше.');
+      }
+    }
+
+    ensureVoiceReady();
+    window.speechSynthesis.addEventListener('voiceschanged', ensureVoiceReady);
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) { announce('Озвучення не підтримується.'); return; }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = state.rate; // standard hastighet
+      u.lang = 'nb-NO';
+      if (selectedVoice) u.voice = selectedVoice;
+      u.onstart = () => announce(`Вимова: ${text}`);
+      u.onend = () => announce('Готово');
+      u.onerror = () => announce('Помилка відтворення.');
+      window.speechSynthesis.speak(u);
+    }
+
+    // ===================== S T A R T =====================
+    render();
+  </script>
+</body>
+</html>
