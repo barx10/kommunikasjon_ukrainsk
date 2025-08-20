@@ -5,7 +5,6 @@ Dette programmet er laget for at barn fra Ukraina som ikke snakker norsk, skal k
 
 ## Funksjoner
 - Temabaserte fraser på norsk og ukrainsk
-- Søk og filtrering
 - Favorittmarkering
 - Lydavspilling av norsk tekst
 - Mulighet for å velge stemme for opplesing
