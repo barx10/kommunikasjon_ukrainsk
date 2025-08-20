@@ -69,16 +69,18 @@
     </div>
 
     <div class="controls" id="controls" aria-label="Панель керування">
-      <div class="searchbar">
-        <input id="search" type="search" placeholder="Пошук" aria-label="Пошук фраз" />
-        <button id="clearSearch" class="btn" type="button" aria-label="Очистити пошук">Очистити (Tøm)</button>
-      </div>
+
 
       <div class="filters" role="group" aria-label="Фільтр за категоріями">
         <button class="chip" type="button" data-cat="Усі" aria-pressed="true" aria-label="Показати всі">Усі (Alle)</button>
         <button class="chip" type="button" data-cat="Потреби" aria-pressed="false" aria-label="Фільтр за категорією: Потреби">Потреби (Behov)</button>
         <button class="chip" type="button" data-cat="Почуття" aria-pressed="false" aria-label="Фільтр за категорією: Почуття">Почуття (Følelser)</button>
         <button class="chip" type="button" data-cat="У школі" aria-pressed="false" aria-label="Фільтр за категорією: У школі">У школі (På skolen)</button>
+      </div>
+
+      <div style="margin-top:8px;">
+        <label for="voiceSelect" style="font-size:0.95rem;">Velg stemme:</label>
+        <select id="voiceSelect" style="min-width:180px; min-height:36px;"></select>
       </div>
     </div>
   </header>
@@ -87,35 +89,15 @@
     <section id="cards" class="grid" aria-label="Картки фраз"></section>
   </main>
 
-  <div class="status" id="status" role="status" aria-live="polite">Готово</div>
 
+
+  <script src="ord/fraser.js"></script>
   <script>
-    // ===================== D A T A =====================
-    const DATA = [
-      { no: "Jeg er sulten", uk: "Я голодний", emoji: "🍽️", cat: "Потреби", alt: ["mat", "spise", "hungry", "їжа", "хочу їсти", "голодний"] },
-      { no: "Jeg er tørst", uk: "Я хочу пити", emoji: "💧", cat: "Потреби", alt: ["drikke", "vann", "thirsty", "пити", "вода", "спрага"] },
-      { no: "Jeg må på do", uk: "Мені потрібно в туалет", emoji: "🚻", cat: "Потреби", alt: ["toalett", "wc", "bathroom", "туалет", "в туалет"] },
-      { no: "Jeg trenger en pause", uk: "Мені потрібна перерва", emoji: "⏸️", cat: "Потреби", alt: ["hvile", "break", "перерва"] },
-      { no: "Jeg er sliten", uk: "Я втомився", emoji: "😴", cat: "Потреби", alt: ["trøtt", "slapp", "tired", "втома", "втомився"] },
-      { no: "Kan jeg hente vann", uk: "Чи можна взяти води", emoji: "🚰", cat: "Потреби", alt: ["drikke", "vann", "вода", "пити"] },
-      { no: "Kan jeg gå ut litt", uk: "Чи можна вийти на хвилинку", emoji: "🚪", cat: "Потреби", alt: ["ute", "gå ut", "вийти", "на вулицю"] },
-      { no: "Dette er bra", uk: "Це добре", emoji: "👍", cat: "Почуття", alt: ["fint", "ok", "bra", "добре"] },
-      { no: "Dette er dårlig", uk: "Це погано", emoji: "👎", cat: "Почуття", alt: ["ikke bra", "bad", "погано"] },
-      { no: "Dette er gøy", uk: "Це весело", emoji: "😄", cat: "Почуття", alt: ["morsomt", "fun", "весело"] },
-      { no: "Dette er kjedelig", uk: "Це нудно", emoji: "😐", cat: "Почуття", alt: ["ikke gøy", "boring", "нудно"] },
-      { no: "Jeg er glad", uk: "Я радий", emoji: "🙂", cat: "Почуття", alt: ["happy", "glad", "радісний"] },
-      { no: "Jeg er trist", uk: "Мені сумно", emoji: "😢", cat: "Почуття", alt: ["lei seg", "sad", "сумно"] },
-      { no: "Jeg er sint", uk: "Я злюся", emoji: "😠", cat: "Почуття", alt: ["sur", "arg", "sint", "злий"] },
-      { no: "Jeg er redd", uk: "Мені страшно", emoji: "😨", cat: "Почуття", alt: ["frykt", "engstelig", "redd", "страшно"] },
-      { no: "Jeg forstår", uk: "Я розумію", emoji: "✅", cat: "У школі", alt: ["skjønner", "understand", "розумію"] },
-      { no: "Jeg forstår ikke", uk: "Я не розумію", emoji: "❓", cat: "У школі", alt: ["vet ikke", "don't understand", "не розумію"] },
-      { no: "Kan du hjelpe meg", uk: "Чи можете ви мені допомогти", emoji: "🙋", cat: "У школі", alt: ["hjelp", "help", "допомога"] },
-      { no: "Kan du si det en gang til", uk: "Повторіть, будь ласка", emoji: "🔁", cat: "У школі", alt: ["gjenta", "repeat", "ще раз"] },
-      { no: "Kan jeg jobbe alene", uk: "Чи можна працювати самому", emoji: "🙇", cat: "У школі", alt: ["selv", "alone", "сам"] },
-      { no: "Kan jeg jobbe sammen", uk: "Чи можна працювати разом", emoji: "👥", cat: "У школі", alt: ["gruppe", "sammen", "разом"] },
-      { no: "Det er for vanskelig", uk: "Це занадто складно", emoji: "🧩", cat: "У школі", alt: ["ikke lett", "difficult", "складно"] },
-      { no: "Det er for lett", uk: "Це занадто легко", emoji: "🟢", cat: "У школі", alt: ["enkelt", "easy", "легко"] },
-    ].map((x, i) => ({ ...x, idx: i }));
+  // ===================== D A T A =====================
+  // DATA hentes nå fra ekstern fil for enklere vedlikehold
+  if (typeof DATA !== 'undefined') {
+    DATA.forEach((x, i) => x.idx = i);
+  }
 
     // ===================== S T A T E  +  F A V S =====================
     const state = { query: "", cat: "Усі", rate: 0.9 };
@@ -135,11 +117,8 @@
     }
 
     function isMatch(item, q) {
-      if (!q) return true;
-      const hay = fold([item.no, item.uk, ...(item.alt || [])].join(' '));
-      const tokens = fold(q).split(/\s+/).filter(Boolean);
-      // Alle ord i søket må finnes et eller annet sted i frasen/alternativene
-      return tokens.every(t => hay.includes(t));
+      // Søkefunksjon er fjernet, alltid true
+      return true;
     }
 
     function sortWithFavs(items) {
@@ -153,11 +132,10 @@
 
     // ===================== R E N D E R =====================
     const cardsEl = document.getElementById('cards');
-    const statusEl = document.getElementById('status');
-    function announce(msg) { statusEl.textContent = msg; }
+  function announce(msg) {}
 
     function render() {
-      const filtered = DATA.filter(x => (state.cat === "Усі" || x.cat === state.cat) && isMatch(x, state.query));
+  const filtered = DATA.filter(x => (state.cat === "Усі" || x.cat === state.cat));
       const arr = sortWithFavs(filtered);
       cardsEl.innerHTML = "";
 
@@ -231,15 +209,10 @@
         cardsEl.appendChild(card);
       }
 
-      if (arr.length === 0) announce('Нічого не знайдено'); else announce('Готово');
+  // Ikke vis statusmelding
     }
 
-    // ===================== S Ø K  +  F I L T E R =====================
-    const searchInput = document.getElementById('search');
-    const clearSearchBtn = document.getElementById('clearSearch');
 
-    searchInput.addEventListener('input', () => { state.query = searchInput.value; render(); });
-    clearSearchBtn.addEventListener('click', () => { searchInput.value = ''; state.query = ''; render(); searchInput.focus(); });
 
     document.querySelectorAll('.chip').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -251,17 +224,55 @@
     });
 
     // ===================== T A L E  (speechSynthesis) =====================
-    let selectedVoice = null;
 
-    function pickVoice() {
-      const voices = window.speechSynthesis.getVoices();
-      if (!voices || voices.length === 0) return null;
-      const wanted = voices.find(v => /^nb|^no|^nn/i.test(v.lang));
-      return wanted || voices[0];
+    let selectedVoice = null;
+    let voices = [];
+
+
+    function populateVoiceList() {
+      voices = window.speechSynthesis.getVoices();
+      // Filtrer kun norske stemmer
+      const norwegianVoices = voices.filter(v => /^nb|^no|^nn/i.test(v.lang));
+      // Del opp i kvinner og menn
+      const femaleVoices = norwegianVoices.filter(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('kvinne') || v.gender === 'female');
+      const maleVoices = norwegianVoices.filter(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('mann') || v.gender === 'male');
+      // Fallback hvis gender ikke er satt: bruk navn
+      const otherVoices = norwegianVoices.filter(v => !femaleVoices.includes(v) && !maleVoices.includes(v));
+      // Velg maks to av hver
+      const limitedVoices = [
+        ...femaleVoices.slice(0,2),
+        ...maleVoices.slice(0,2)
+      ];
+      // Hvis det ikke finnes nok, fyll på med andre norske stemmer
+      while (limitedVoices.length < 4 && otherVoices.length > 0) {
+        limitedVoices.push(otherVoices.shift());
+      }
+      const voiceSelect = document.getElementById('voiceSelect');
+      if (!voiceSelect) return;
+      voiceSelect.innerHTML = '';
+      limitedVoices.forEach((voice, i) => {
+        const option = document.createElement('option');
+        option.value = voices.indexOf(voice);
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (voice.gender === 'female' || voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('kvinne')) option.textContent += ' 👩';
+        if (voice.gender === 'male' || voice.name.toLowerCase().includes('male') || voice.name.toLowerCase().includes('mann')) option.textContent += ' 👨';
+        voiceSelect.appendChild(option);
+      });
+      // Velg første stemme hvis mulig
+      voiceSelect.selectedIndex = 0;
+      selectedVoice = limitedVoices[0] || null;
     }
 
+
     function ensureVoiceReady() {
-      selectedVoice = pickVoice();
+      populateVoiceList();
+      const voiceSelect = document.getElementById('voiceSelect');
+      if (voiceSelect) {
+        voiceSelect.addEventListener('change', () => {
+          selectedVoice = voices[voiceSelect.selectedIndex] || null;
+          announce(selectedVoice ? `Stemme valgt: ${selectedVoice.name}` : 'Ingen stemme valgt.');
+        });
+      }
       if (selectedVoice) {
         const useFallback = !/^nb|^no|^nn/i.test(selectedVoice.lang || '');
         announce(useFallback ? 'Голос знайдено (резервний).' : 'Голос норвезькою готовий.');
@@ -281,8 +292,8 @@
       u.lang = 'nb-NO';
       if (selectedVoice) u.voice = selectedVoice;
       u.onstart = () => announce(`Вимова: ${text}`);
-      u.onend = () => announce('Готово');
-      u.onerror = () => announce('Помилка відтворення.');
+  u.onend = () => {};
+  u.onerror = () => {};
       window.speechSynthesis.speak(u);
     }
 
