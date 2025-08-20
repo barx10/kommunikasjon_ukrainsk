@@ -51,29 +51,6 @@ Følelser:
 
 På skolen:
 ![På skolen](screenshots/paa_skolen.png)
-# Norsk-ukrainsk kommunikasjonsverktøy
-
-## Hensikt
-Dette programmet er laget for at barn fra Ukraina som ikke snakker norsk, skal kunne kommunisere på en trygg og enkel måte med lærere og medelever. Målet er å senke terskelen for deltakelse og bidra til en inkluderende skolehverdag.
-
-## Funksjoner
-- Temabaserte fraser på norsk og ukrainsk
-- Søk og filtrering
-- Favorittmarkering
-- Lydavspilling av norsk tekst
-- Mulighet for å velge stemme for opplesing
-- Enkelt og brukervennlig grensesnitt
-
-## Bruk
-Åpne `index.html` i en nettleser. Ingen installasjon nødvendig.
-
-### Stemmevalg og kvalitet
-Du kan velge mellom tilgjengelige norske stemmer for opplesing i programmet. Kvaliteten og antallet stemmer avhenger av hvilke stemmer som er installert på din PC eller Mac.
-
-**Tips:** For bedre kvalitet og flere alternativer, kan du laste ned forbedrede norske stemmer via systeminnstillingene på din datamaskin:
-- **Mac:** Systeminnstillinger → Tilgjengelighet → Tale → «Legg til stemme» (velg norsk, gjerne «Forbedret kvalitet»)
-- **Windows:** Innstillinger → Tid og språk → Tale → «Legg til stemme» (velg norsk og eventuelt «Forbedret»)
-Start nettleseren på nytt etter installasjon for å få tilgang til nye stemmer.
 
 ## Piktogrammer
 Det er for øyeblikket ikke brukt piktogrammer fra Widgit i denne løsningen. Ved eventuell utvidelse anbefales det å bruke Widgit-piktogrammer for å sikre enhetlig og gjenkjennelig visuell støtte. Husk at Widgit-piktogrammer må brukes i henhold til Widgits lisensvilkår.
