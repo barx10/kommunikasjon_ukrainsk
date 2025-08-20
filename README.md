@@ -1,3 +1,17 @@
+## Publisere som nettside (GitHub Pages)
+
+Du kan gjøre denne løsningen tilgjengelig for alle via GitHub Pages:
+
+1. Gå til repoet på github.com.
+2. Klikk på "Settings" (Innstillinger).
+3. Velg "Pages" i menyen til venstre.
+4. Under "Build and deployment", velg "Deploy from a branch".
+5. Velg branch (vanligvis `main`) og rotmappe (`/ (root)`).
+6. Trykk "Save".
+
+Etter kort tid får du en URL, f.eks. `https://brukernavn.github.io/kommunikasjon_ukrainsk/`, hvor nettsiden er tilgjengelig for alle.
+
+Startfilen må hete `index.html` og ligge i rotmappen. Alt innhold (JS, bilder, ord/fraser) må ligge i repoet.
 # Norsk-ukrainsk kommunikasjonsverktøy
 
 ## Hensikt
