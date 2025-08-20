@@ -10,8 +10,21 @@ Dette programmet er laget for at barn fra Ukraina som ikke snakker norsk, skal k
 - Mulighet for å velge stemme for opplesing
 - Enkelt og brukervennlig grensesnitt
 
+
 ## Bruk
-Åpne `index.html` i en nettleser. Ingen installasjon nødvendig.
+
+**Anbefalt:** Bruk løsningen direkte på nett via GitHub Pages (se under), eller start en enkel lokal webserver for å teste på egen maskin.
+
+### Lokal bruk (for utvikling og testing)
+Åpne en terminal i prosjektmappen og kjør:
+
+```
+python3 -m http.server 8000
+```
+
+Deretter kan du åpne [http://localhost:8000/](http://localhost:8000/) i nettleseren.
+
+**NB:** Å åpne `index.html` direkte i nettleseren (dobbeltklikk) vil ofte ikke fungere som forventet, fordi moderne nettlesere blokkerer lasting av lokale filer (JS, bilder, osv.).
 
 ### Stemmevalg og kvalitet
 Du kan velge mellom tilgjengelige norske stemmer for opplesing i programmet. Kvaliteten og antallet stemmer avhenger av hvilke stemmer som er installert på din PC eller Mac.
