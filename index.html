@@ -82,6 +82,45 @@
     .filters { display: flex; flex-wrap: wrap; gap: 6px; }
     .chip { background: var(--chip); border: 2px solid var(--card-border); border-radius: 999px; padding: 8px 12px; min-height: 48px; cursor: pointer; font-weight: 600; }
     .chip[aria-pressed="true"] { background: #d9e9ff; border-color: var(--accent); }
+    .catbtn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      min-width: 140px;
+      max-width: 150px;
+      min-height: 140px;
+      max-height: 150px;
+      padding: 18px 8px 16px 8px;
+      font-weight: 600;
+      gap: 0;
+      text-align: center;
+      overflow: hidden;
+      white-space: normal;
+      word-break: break-word;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+    .cat-emoji {
+      font-size: 1.7rem;
+      margin-bottom: 2px;
+      line-height: 1;
+    }
+    .cat-uk {
+      font-size: 1.08rem;
+      font-weight: bold;
+      margin-bottom: 1px;
+      line-height: 1.1;
+      word-break: break-word;
+    }
+    .cat-no {
+      font-size: 0.93rem;
+      color: #444;
+      opacity: 0.85;
+      line-height: 1.1;
+      word-break: break-word;
+    }
 
     main { padding: 16px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
@@ -114,11 +153,36 @@
 
 
       <div class="filters" role="group" aria-label="Фільтр за категоріями">
-  <button class="chip" type="button" data-cat="Усі" aria-pressed="true" aria-label="Показати всі">Усі (Alle)</button>
-  <button class="chip" type="button" data-cat="Потреби" aria-pressed="false" aria-label="Фільтр за категорією: Потреби">Потреби (Behov)</button>
-  <button class="chip" type="button" data-cat="Почуття" aria-pressed="false" aria-label="Фільтр за категорією: Почуття">Почуття (Følelser)</button>
-  <button class="chip" type="button" data-cat="У школі" aria-pressed="false" aria-label="Фільтр за категорією: У школі">У школі (På skolen)</button>
-  <button class="chip" type="button" data-cat="Aktiviteter" aria-pressed="false" aria-label="Фильтр за категорией: Aktiviteter">Aktiviteter</button>
+        <button class="chip catbtn" type="button" data-cat="Усі" aria-pressed="true" aria-label="Показати всі">
+          <span class="cat-emoji" aria-hidden="true">🌐</span>
+          <span class="cat-uk">Усі</span>
+          <span class="cat-no">(Alle)</span>
+        </button>
+        <button class="chip catbtn" type="button" data-cat="Потреби" aria-pressed="false" aria-label="Фільтр за категорією: Потреби">
+          <span class="cat-emoji" aria-hidden="true">🛠️</span>
+          <span class="cat-uk">Потреби</span>
+          <span class="cat-no">(Behov)</span>
+        </button>
+        <button class="chip catbtn" type="button" data-cat="Почуття" aria-pressed="false" aria-label="Фільтр за категорією: Почуття">
+          <span class="cat-emoji" aria-hidden="true">🙂</span>
+          <span class="cat-uk">Почуття</span>
+          <span class="cat-no">(Følelser)</span>
+        </button>
+        <button class="chip catbtn" type="button" data-cat="У школі" aria-pressed="false" aria-label="Фільтр за категорією: У школі">
+          <span class="cat-emoji" aria-hidden="true">🏫</span>
+          <span class="cat-uk">У школі</span>
+          <span class="cat-no">(På skolen)</span>
+        </button>
+        <button class="chip catbtn" type="button" data-cat="Høflighet" aria-pressed="false" aria-label="Filter: Høflighet">
+          <span class="cat-emoji" aria-hidden="true">🤝</span>
+          <span class="cat-uk">Ввічливість</span>
+          <span class="cat-no">(Høflighet)</span>
+        </button>
+        <button class="chip catbtn" type="button" data-cat="Aktiviteter" aria-pressed="false" aria-label="Фильтр за категорией: Aktiviteter">
+          <span class="cat-emoji" aria-hidden="true">🎲</span>
+          <span class="cat-uk">Діяльності</span>
+          <span class="cat-no">(Aktiviteter)</span>
+        </button>
       </div>
 
       <div style="margin-top:8px;">
