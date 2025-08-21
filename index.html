@@ -138,6 +138,37 @@
     .status { margin: 8px 16px 16px; padding: 10px 12px; border: 2px solid var(--card-border); border-radius: 8px; background: #fff; }
 
     @media (max-width: 480px) { .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+
+    .footer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px 0 12px 0;
+      background: #f8f8fa;
+      border-top: 1.5px solid #e0e0e0;
+      margin-top: 32px;
+    }
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #222;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .footer-logo {
+      height: 38px;
+      width: auto;
+      display: inline-block;
+    }
+    .footer-text {
+      font-size: 1.08rem;
+      color: #222;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
@@ -196,6 +227,12 @@
   <main>
     <section id="cards" class="grid" aria-label="Картки фраз"></section>
   </main>
+  <footer class="footer">
+    <a href="https://laererliv.no" target="_blank" rel="noopener" class="footer-link">
+      <img src="logo_laererliv.png" alt="Lærerliv logo" class="footer-logo" />
+      <span class="footer-text">Lærerliv 2025</span>
+    </a>
+  </footer>
 
 
 
