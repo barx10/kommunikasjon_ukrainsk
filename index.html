@@ -30,9 +30,47 @@
 
     @media (prefers-reduced-motion: reduce) { *,*::before,*::after{ animation:none !important; transition:none !important; } }
 
-    header { padding: 12px 16px; border-bottom: 2px solid var(--card-border); display: grid; gap: 10px; }
-    .topbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .title { font-size: 1.1rem; font-weight: 700; margin-right: auto; }
+    header {
+      padding: 28px 0 18px 0;
+      background: linear-gradient(90deg, #e9eef6 0%, #d9e9ff 100%);
+      border-bottom: 2px solid var(--card-border);
+      box-shadow: 0 2px 8px 0 #e9eef6;
+      display: grid;
+      gap: 10px;
+    }
+    .topbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 6px;
+    }
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .title-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 2px;
+    }
+    .title-uk {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #005fcc;
+      margin-bottom: 2px;
+    }
+    .title-no {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #2b2b2b;
+      opacity: 0.85;
+    }
 
     .controls { display: grid; gap: 8px; }
 
@@ -65,7 +103,11 @@
 <body>
   <header>
     <div class="topbar">
-      <div class="title" aria-label="Назва">Базова норвезька комунікація (Norsk grunnleggende kommunikasjon)</div>
+      <div class="title" aria-label="Назва">
+        <span class="title-emoji" aria-hidden="true">🗣️🇳🇴🇺🇦</span>
+        <span class="title-uk">Базова норвезька комунікація</span>
+        <span class="title-no">Norsk grunnleggende kommunikasjon</span>
+      </div>
     </div>
 
     <div class="controls" id="controls" aria-label="Панель керування">
