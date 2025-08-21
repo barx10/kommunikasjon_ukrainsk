@@ -55,14 +55,7 @@ Hvis du ønsker å bruke piktogrammer, kan du legge til en ny egenskap (f.eks. `
 
 ## Skjermbilder
 
-Behov:
-![Behov](screenshots/behov.png)
-
-Følelser:
-![Følelser](screenshots/foelelser.png)
-
-På skolen:
-![På skolen](screenshots/paa_skolen.png)
+![Hovedbilde](main_screenshot.png)
 
 ## Piktogrammer
 Det er for øyeblikket ikke brukt piktogrammer fra Widgit i denne løsningen. Ved eventuell utvidelse anbefales det å bruke Widgit-piktogrammer for å sikre enhetlig og gjenkjennelig visuell støtte. Husk at Widgit-piktogrammer må brukes i henhold til Widgits lisensvilkår.
