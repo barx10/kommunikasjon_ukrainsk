@@ -77,3 +77,13 @@ Startfilen må hete `index.html` og ligge i rotmappen. Alt innhold (JS, bilder, 
 
 ## Lisens
 Dette prosjektet er kun til bruk i skolesammenheng. Piktogrammer fra Widgit må brukes i henhold til deres lisensvilkår.
+
+---
+
+<p align="center">
+  <a href="https://laererliv.no" target="_blank" rel="noopener">
+    <img src="logo_laererliv.png" alt="Lærerliv logo" height="38" style="vertical-align:middle;" />
+    <br/>
+    <b>Lærerliv 2025</b>
+  </a>
+</p>
