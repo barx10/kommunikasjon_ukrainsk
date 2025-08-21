@@ -24,3 +24,39 @@ const DATA = [
   { no: "Det er for vanskelig", uk: "Це занадто складно", emoji: "🧩", cat: "У школі", alt: ["ikke lett", "difficult", "складно"] },
   { no: "Det er for lett", uk: "Це занадто легко", emoji: "🟢", cat: "У школі", alt: ["enkelt", "easy", "легко"] }
 ];
+  // Legg til høflighetsfraser hvis de ikke finnes
+  const hoflighet = [
+    { emoji: '👋', uk: 'Привіт!', no: 'Hei!', cat: 'Høflighet' },
+    { emoji: '👋', uk: 'Бувай!', no: 'Hadet!', cat: 'Høflighet' },
+    { emoji: '🙏', uk: 'Дякую!', no: 'Takk!', cat: 'Høflighet' },
+    { emoji: '😊', uk: 'Будь ласка', no: 'Vær så snill', cat: 'Høflighet' },
+    { emoji: '😅', uk: 'Вибач', no: 'Unnskyld', cat: 'Høflighet' },
+    { emoji: '🌅', uk: 'Доброго ранку', no: 'God morgen', cat: 'Høflighet' },
+    { emoji: '🍽️', uk: 'Дякую за їжу', no: 'Takk for maten', cat: 'Høflighet' },
+    { emoji: '🎉', uk: 'Вітаю!', no: 'Gratulerer!', cat: 'Høflighet' },
+    { emoji: '🤝', uk: 'Можна з вами?', no: 'Kan jeg få være med', cat: 'Høflighet' },
+    { emoji: '❔', uk: 'Як тебе звати?', no: 'Hva heter du?', cat: 'Høflighet' }
+  ];
+  hoflighet.forEach((x, i) => {
+    if (!DATA.some(d => d.no === x.no && d.cat === 'Høflighet')) {
+      x.idx = DATA.length + i;
+      DATA.push(x);
+    }
+  });
+
+  // Legg til aktivitetsfraser hvis de ikke finnes
+  const aktiviteter = [
+    { emoji: '🤸', uk: 'Я хочу гратися', no: 'Jeg vil leke', cat: 'Aktiviteter' },
+    { emoji: '🚶', uk: 'Я хочу піти на прогулянку', no: 'Jeg vil gå en tur', cat: 'Aktiviteter' },
+    { emoji: '🎨', uk: 'Я хочу малювати', no: 'Jeg vil tegne', cat: 'Aktiviteter' },
+    { emoji: '🧩', uk: 'Я хочу складати пазли', no: 'Jeg vil pusle', cat: 'Aktiviteter' },
+    { emoji: '🎧', uk: 'Я хочу слухати музику', no: 'Jeg vil høre på musikk', cat: 'Aktiviteter' },
+    { emoji: '🎲', uk: 'Я хочу грати в ігри', no: 'Jeg vil spille spill', cat: 'Aktiviteter' },
+    { emoji: '📖', uk: 'Я хочу читати', no: 'Jeg vil lese', cat: 'Aktiviteter' }
+  ];
+  aktiviteter.forEach((x, i) => {
+    if (!DATA.some(d => d.no === x.no && d.cat === 'Aktiviteter')) {
+      x.idx = DATA.length + i;
+      DATA.push(x);
+    }
+  });

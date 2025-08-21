@@ -205,22 +205,6 @@
   // DATA hentes nå fra ekstern fil for enklere vedlikehold
   if (typeof DATA !== 'undefined') {
     DATA.forEach((x, i) => x.idx = i);
-    // Legg til underkategorier for Aktiviteter hvis de ikke finnes
-    const aktiviteter = [
-      { emoji: '🤸', uk: 'Я хочу гратися', no: 'Jeg vil leke', cat: 'Aktiviteter' },
-      { emoji: '🚶', uk: 'Я хочу піти на прогулянку', no: 'Jeg vil gå en tur', cat: 'Aktiviteter' },
-      { emoji: '🎨', uk: 'Я хочу малювати', no: 'Jeg vil tegne', cat: 'Aktiviteter' },
-      { emoji: '🧩', uk: 'Я хочу складати пазли', no: 'Jeg vil pusle', cat: 'Aktiviteter' },
-      { emoji: '🎧', uk: 'Я хочу слухати музику', no: 'Jeg vil høre på musikk', cat: 'Aktiviteter' },
-      { emoji: '🎲', uk: 'Я хочу грати в ігри', no: 'Jeg vil spille spill', cat: 'Aktiviteter' },
-      { emoji: '📖', uk: 'Я хочу читати', no: 'Jeg vil lese', cat: 'Aktiviteter' }
-    ];
-    aktiviteter.forEach((x, i) => {
-      if (!DATA.some(d => d.no === x.no && d.cat === 'Aktiviteter')) {
-        x.idx = DATA.length + i;
-        DATA.push(x);
-      }
-    });
   }
 
     // ===================== S T A T E  +  F A V S =====================
