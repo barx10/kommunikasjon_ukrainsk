@@ -153,13 +153,20 @@
         emoji.textContent = item.emoji;
         emoji.setAttribute('aria-hidden', 'true');
 
-        const no = document.createElement('div');
-        no.className = 'no';
-        no.textContent = item.no; // norsk stor øverst
-
+        // UKRAINIAN FIRST, BOLD AND LARGE
         const uk = document.createElement('div');
         uk.className = 'uk';
-        uk.textContent = `${item.uk} (${item.no})`;
+        uk.textContent = item.uk;
+        uk.style.fontWeight = 'bold';
+        uk.style.fontSize = '1.35rem';
+
+        // NORWEGIAN BELOW, IN PARENTHESES, SMALLER
+        const no = document.createElement('div');
+        no.className = 'no';
+        no.textContent = `(${item.no})`;
+        no.style.fontWeight = 'normal';
+        no.style.fontSize = '1rem';
+        no.style.color = '#444';
 
         const actions = document.createElement('div');
         actions.className = 'actions';
@@ -183,8 +190,8 @@
         actions.appendChild(favBtn);
 
         card.appendChild(emoji);
-        card.appendChild(no);
         card.appendChild(uk);
+        card.appendChild(no);
         card.appendChild(actions);
 
         card.addEventListener('click', (e) => {
